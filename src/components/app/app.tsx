@@ -5,9 +5,12 @@ import {NewGame} from "@components/new-game/new-game";
 export const App: FC = () => {
     const newGameClickHandler = () => {};
     return (
-        <div className="app container">
+        <div className="app">
             <h1 className="app__title">Game of dice</h1>
-            <NewGame onClick={newGameClickHandler} />
+            <div className="container">
+                <NewGame onClick={newGameClickHandler} />
+                <div className="app__playground"></div>
+            </div>
         </div>
     );
 }
