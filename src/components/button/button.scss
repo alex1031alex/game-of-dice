@@ -1,10 +1,11 @@
-.new-game {
+.button {
   --font-size: 24px;
+  font-size: 24px;
   display: block;
-  margin: 0 auto;
+  margin-right: auto;
+  margin-left: auto;
   text-transform: uppercase;
   text-align: center;
-  font-size: 24px;
   color: var(--foreground-primary);
   cursor: pointer;
   padding: 10px calc(var(--font-size) * 2);
@@ -20,5 +21,13 @@
 
   &:active {
     opacity: 0.7;
+  }
+
+  &--roll {
+    background-image: url("../../images/icons/circular.svg");
+  }
+
+  &--hold {
+    background-image: url("../../images/icons/arrow-down-box.svg");
   }
 }

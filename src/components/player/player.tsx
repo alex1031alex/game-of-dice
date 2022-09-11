@@ -8,7 +8,7 @@ interface TProps  {
     currentScore: number;
 }
 
-export const Player: FC<TProps> = ({name, isActive = true, totalScore, currentScore}) => {
+export const Player: FC<TProps> = ({name, isActive, totalScore, currentScore}) => {
     return (
         <div className="player">
             <h2 className={`player__title ${isActive && "player__title--active"}`}>{name}</h2>
@@ -19,4 +19,4 @@ export const Player: FC<TProps> = ({name, isActive = true, totalScore, currentSc
             </div>
         </div>
     );
-}
+};
