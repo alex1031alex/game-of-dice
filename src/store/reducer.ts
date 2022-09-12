@@ -53,8 +53,9 @@ export const mainSlice = createSlice({
         setDice: (state, action) => {
                 state.dice = action.payload;
                 const diceSum = state.dice[0] + state.dice[1];
-                if (state.dice[0] === 6 && state.dice[1] === 6) {
+                if (diceSum / state.dice[0] === 2) {
                     state.entities[state.activePlayer].currentScore = 0;
+                    state.dice = [];
                     switchActivePlayer(state);
                 } else {
                     state.entities[state.activePlayer].currentScore += diceSum;
