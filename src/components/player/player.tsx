@@ -1,17 +1,17 @@
 import "./player.scss";
 import {FC} from "react";
 import {useSelector} from "react-redux";
-import {RootState} from "../../store/store";
-import {Player as IPlayer} from "../../store/reducer";
+import {Player as IPlayer, Id} from "../../types";
+import {selectWinner, selectActivePlayer, selectPlayerById} from "../../store/selectors";
 
 interface TProps  {
-    id: string;
+    id: Id;
 }
 
 export const Player: FC<TProps> = ({id}) => {
-    const player = useSelector<RootState>((state) => state.entities[id]) as IPlayer;
-    const winner = useSelector<RootState>((state) => state.winner);
-    const isActive = useSelector((state: RootState) => state.activePlayer) === id && !winner;
+    const player = useSelector(selectPlayerById(id)) as IPlayer;
+    const winner = useSelector(selectWinner);
+    const isActive = useSelector(selectActivePlayer) === id && !winner;
 
     return (
         <div className="player">

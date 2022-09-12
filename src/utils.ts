@@ -1,4 +1,4 @@
-import {InitialState} from "./store/reducer";
+import {InitialState} from "./types";
 
 export const getRandomNumber = () => {
     return Math.floor(1 + Math.random() * 6);
