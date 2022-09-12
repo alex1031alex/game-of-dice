@@ -1,0 +1,33 @@
+.button {
+  --font-size: 24px;
+  font-size: 24px;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--foreground-primary);
+  cursor: pointer;
+  padding: 10px calc(var(--font-size) * 2);
+  background-image: url("../../images/icons/plus.svg");
+  background-repeat: no-repeat;
+  background-position: 5px center;
+  background-size: calc(var(--font-size) * 1.2) calc(var(--font-size) * 1.2);
+
+  &:hover, &:active {
+    color: var(--foreground-accent);
+    background-color: var(--background-tertiary);
+  }
+
+  &:active {
+    opacity: 0.7;
+  }
+
+  &--roll {
+    background-image: url("../../images/icons/circular.svg");
+  }
+
+  &--hold {
+    background-image: url("../../images/icons/arrow-down-box.svg");
+  }
+}
