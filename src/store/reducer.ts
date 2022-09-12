@@ -1,10 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-
-export enum GameStatus {
-    PLAYING = "playing",
-    PLAYER_1_WON = "player_1_won",
-    PLAYER_2_WON = "player_2_won"
-}
+import {switchActivePlayer} from "../utils";
 
 type Id = "Player 1" | "Player 2";
 
@@ -14,17 +9,17 @@ export interface Player {
     totalScore: number;
 }
 
-interface InitialState {
-    gameStatus: GameStatus;
+export interface InitialState {
+    winner: null | Id;
     targetScore: number | "";
     activePlayer: Id;
     dice: number[]
     entities: {[key: string]: Player},
-    ids: string[]
+    ids: Id[]
 }
 
 const initialState: InitialState = {
-    gameStatus: GameStatus.PLAYING,
+    winner: null,
     targetScore: 100,
     activePlayer: "Player 1",
     dice: [],
@@ -60,13 +55,26 @@ export const mainSlice = createSlice({
                 const diceSum = state.dice[0] + state.dice[1];
                 if (state.dice[0] === 6 && state.dice[1] === 6) {
                     state.entities[state.activePlayer].currentScore = 0;
+                    switchActivePlayer(state);
                 } else {
                     state.entities[state.activePlayer].currentScore += diceSum;
                 }
+        },
+        holdResult: (state) => {
+            state.entities[state.activePlayer].totalScore += state.entities[state.activePlayer].currentScore;
+            state.entities[state.activePlayer].currentScore = 0;
+            if (state.entities[state.activePlayer].totalScore >= state.targetScore) {
+                state.winner = state.activePlayer;
+            } else {
+                state.dice = [];
+                switchActivePlayer(state);
+            }
+        },
+        resetGame: () => {
+            return initialState;
         }
     }
 });
 
-export const { setTargetScore, setDice } = mainSlice.actions;
+export const { setTargetScore, setDice, holdResult, resetGame } = mainSlice.actions;
 export default mainSlice.reducer;
-
