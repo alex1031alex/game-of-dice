@@ -1,42 +1,70 @@
-import {AnyAction} from "redux";
-import {ActionType} from "./actions";
+import {createSlice} from "@reduxjs/toolkit";
 
-export const GameStatus = {
-    NOT_STARTED: "not_started",
-    PLAYING: "playing",
-    PLAYER_1_WON: "player_1_won",
-    PLAYER_2_WON: "player_2_won"
+export enum GameStatus {
+    PLAYING = "playing",
+    PLAYER_1_WON = "player_1_won",
+    PLAYER_2_WON = "player_2_won"
 }
 
-const initialState = {
-    gameStatus: GameStatus.NOT_STARTED,
-    targetScore: 0,
-    activePlayer: null,
+type Id = "Player 1" | "Player 2";
+
+interface Player {
+    id: Id;
+    currentScore: number;
+    totalScore: number;
 }
 
-export const reducer = (state = initialState, action: AnyAction) => {
-    switch (action.type) {
-        case ActionType.SET_GAME_STATUS: {
-            return {
-                ...state,
-                gameStatus: action.payload
-            };
-        }
+interface InitialState {
+    gameStatus: GameStatus;
+    targetScore: number | "";
+    activePlayer: Id;
+    dice: number[]
+    entities: {[key: string]: Player},
+    ids: string[]
+}
 
-        case ActionType.SET_TARGET_SCORE: {
-            return {
-                ...state,
-                targetScore: action.payload
-            };
+const initialState: InitialState = {
+    gameStatus: GameStatus.PLAYING,
+    targetScore: 100,
+    activePlayer: "Player 1",
+    dice: [],
+    entities: {
+        "Player 1": {
+            id: "Player 1",
+            currentScore: 0,
+            totalScore: 0
+        },
+        "Player 2": {
+            id: "Player 2",
+            currentScore: 0,
+            totalScore: 0
         }
+    },
+    ids: ["Player 1", "Player 2"]
+}
 
-        case ActionType.SET_ACTIVE_PLAYER: {
-            return {
-                ...state,
-                activePlayer: action.payload
+export const mainSlice = createSlice({
+    name: "main",
+    initialState,
+    reducers: {
+        setTargetScore: (state, action) => {
+            if (action.payload > 0) {
+                state.targetScore = action.payload;
             }
+            if (action.payload === 0 || action.payload === "") {
+                state.targetScore = "";
+            }
+        },
+        setDice: (state, action) => {
+                state.dice = action.payload;
+                if (state.dice[0] === 6 && state.dice[1] === 6) {
+                    return state;
+                }
+                state.entities[state.activePlayer].currentScore = state.dice[0] + state.dice[1];
         }
-
-        default: return state;
     }
-};
+});
+
+export const { setTargetScore, setDice } = mainSlice.actions;
+export default mainSlice.reducer;
+

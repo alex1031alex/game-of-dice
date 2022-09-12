@@ -2,6 +2,8 @@ import {FC} from "react";
 import {DiceItem} from "@components/dice-item/diceItem";
 import "./dice-list.scss";
 import classNames from "classnames";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/store";
 
 interface TProps {
     className?: string;
@@ -9,10 +11,13 @@ interface TProps {
 
 export const DiceList: FC<TProps> = (props) => {
     const {className} = props;
+    const dice = useSelector((state: RootState) => state.dice);
+
     return (
         <div className={classNames("dice-list", className)}>
-            <DiceItem value={3}/>
-            <DiceItem value={4}/>
+            {dice.length === 2 && dice.map((it, index) => {
+                return <DiceItem key={index} value={it}/>
+            })}
         </div>
     );
 };

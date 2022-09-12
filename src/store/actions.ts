@@ -1,5 +1,10 @@
-export const ActionType = {
-    SET_GAME_STATUS: "gameStatus/setGameStatus",
-    SET_TARGET_SCORE: "targetScore/setTargetScore",
-    SET_ACTIVE_PLAYER: "activePlayer/setActivePlayer"
-}
+import { setDice } from "./reducer";
+import {createAsyncThunk, PayloadAction} from "@reduxjs/toolkit";
+import { getRandomNumber } from "../utils";
+import {AppDispatch, AppGetState} from "./store";
+
+
+export const rollDiceThunk = () => (dispatch: AppDispatch) => {
+    const payload = new Array(2).fill(getRandomNumber());
+    return dispatch(setDice(payload));
+};

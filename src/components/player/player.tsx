@@ -1,17 +1,19 @@
 import "./player.scss";
 import {FC} from "react";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/store";
 
 interface TProps  {
-    name: string;
-    isActive: boolean;
+    id: string;
     totalScore: number;
     currentScore: number;
 }
 
-export const Player: FC<TProps> = ({name, isActive, totalScore, currentScore}) => {
+export const Player: FC<TProps> = ({id, totalScore, currentScore}) => {
+    const isActive = useSelector((state: RootState) => state.activePlayer) === id;
     return (
         <div className="player">
-            <h2 className={`player__title ${isActive && "player__title--active"}`}>{name}</h2>
+            <h2 className={`player__title ${isActive && "player__title--active"}`}>{id}</h2>
             <p className="player__total-score">{totalScore}</p>
             <div className="player__current-container">
                 <p className="player__current-label">current</p>
