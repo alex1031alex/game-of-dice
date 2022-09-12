@@ -8,7 +8,7 @@ export enum GameStatus {
 
 type Id = "Player 1" | "Player 2";
 
-interface Player {
+export interface Player {
     id: Id;
     currentScore: number;
     totalScore: number;
@@ -57,10 +57,12 @@ export const mainSlice = createSlice({
         },
         setDice: (state, action) => {
                 state.dice = action.payload;
+                const diceSum = state.dice[0] + state.dice[1];
                 if (state.dice[0] === 6 && state.dice[1] === 6) {
-                    return state;
+                    state.entities[state.activePlayer].currentScore = 0;
+                } else {
+                    state.entities[state.activePlayer].currentScore += diceSum;
                 }
-                state.entities[state.activePlayer].currentScore = state.dice[0] + state.dice[1];
         }
     }
 });

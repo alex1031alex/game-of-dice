@@ -28,14 +28,14 @@ export const App: FC = () => {
             <div className="container app__container">
                 <Button onClick={newGameClickHandler} className={"button--new-game"}>New game</Button>
                 <div className="app__playground">
-                    <Player id="Player 1" currentScore={0} totalScore={0} />
+                    <Player id="Player 1" totalScore={0} />
                     <div className="app__controls">
                         <DiceList className="app__dice-list"  />
                         <Button onClick={rollDiceClickHandler} className="button--roll" disabled={!targetScore}>Roll dice</Button>
                         <Button onClick={() => {}} className="button--hold app__button" disabled={!targetScore}>Hold</Button>
                         <input className="app__input" type="number" placeholder="target score" value={targetScore} onChange={onChange} />
                     </div>
-                    <Player id="Player 2" currentScore={0} totalScore={7} />
+                    <Player id="Player 2" totalScore={7} />
                 </div>
             </div>
         </div>
